@@ -1,0 +1,7 @@
+version: "3"
+
+services:
+  messaging:
+  front-end:
+  db:
+  back-end:
