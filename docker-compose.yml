@@ -1,7 +1,10 @@
 version: "3"
 
 services:
-  messaging:
   front-end:
-  db:
-  back-end:
+    build: ./front_end
+    ports:
+      - "3000:3000"
+    #uncomment for development
+    volumes:
+      - "./front_end:/app"
