@@ -1,0 +1,24 @@
+import Head from "next/head";
+import { FC, ReactChild, ReactFragment } from "react";
+import styles from "../styles/Layout.module.css";
+import Nav from "./Nav";
+import Meta from "./Meta";
+
+type ChildProp = {
+  children: React.FC;
+};
+
+const Layout = ({ children }: ChildProp) => {
+  return (
+    <>
+      <Meta />
+      <Nav />
+      <div className={styles.container}>
+        <main className={styles.main}>{children}</main>
+      </div>
+      <footer className={styles.footer}>Copyright &copy; 2021</footer>
+    </>
+  );
+};
+
+export default Layout;
