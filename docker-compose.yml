@@ -8,3 +8,11 @@ services:
     #uncomment for development
     volumes:
       - "./front_end:/app"
+  back-end:
+    build: .
+    environment:
+      - NODE_ENV=development
+      - MSG_USER=guest
+      - MSG_PASS=guest
+      - MESSAGING_HOST=messaging  
+      - PYTHONUNBUFFERED=1
