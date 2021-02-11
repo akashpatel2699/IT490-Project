@@ -2,14 +2,22 @@ FROM node:15.7.0-alpine3.10
 
 MAINTAINER AKASH PATEL
 
-WORKDIR /app
+# Create app directory
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
 
-COPY ./package.json /app
-
+# Installing dependencies
+COPY package*.json /usr/src/app/
 RUN npm install 
 
-COPY . /app
+# Copying source files
+COPY . /usr/src/app
 
+# Building app
+RUN npm run build
+
+# Expose port 3000 to local machine
 EXPOSE 3000
 
-CMD ["npm", "run","dev"]
+# Running the app in production mode
+CMD ["npm", "run","start"]
