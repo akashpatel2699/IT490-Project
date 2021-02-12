@@ -19,6 +19,12 @@ Our team of four students have decided to create a math placement site that will
 
 ---
 
+## Application Architecture 
+
+[![](https://mermaid.ink/img/eyJjb2RlIjoiZ3JhcGggTFJcbiAgICBpZDIoRnJvbnRFbmQpIC0tPiBpZDMoTWVzc2FnaW5nKVxuICAgIGlkMyhNZXNzYWdpbmcpIC0tPiBpZDQoQmFja0VuZClcbiAgICBpZDQoQmFja0VuZCkgLS0-IGlkMVsoRGF0YWJhc2UpXVxuICAgIGlkMVsoRGF0YWJhc2UpXSAtLT4gaWQ0KEJhY2tFbmQpXG4gICAgaWQ0KEJhY2tFbmQpIC0tPiBpZDMoTWVzc2FnaW5nKVxuICAgIGlkMyhNZXNzYWdpbmcpIC0tPiBpZDIoRnJvbnRFbmQpXG4gICAgICAgICAgICAiLCJtZXJtYWlkIjp7InRoZW1lIjoiZGVmYXVsdCJ9LCJ1cGRhdGVFZGl0b3IiOmZhbHNlfQ)](https://mermaid-js.github.io/mermaid-live-editor/#/edit/eyJjb2RlIjoiZ3JhcGggTFJcbiAgICBpZDIoRnJvbnRFbmQpIC0tPiBpZDMoTWVzc2FnaW5nKVxuICAgIGlkMyhNZXNzYWdpbmcpIC0tPiBpZDQoQmFja0VuZClcbiAgICBpZDQoQmFja0VuZCkgLS0-IGlkMVsoRGF0YWJhc2UpXVxuICAgIGlkMVsoRGF0YWJhc2UpXSAtLT4gaWQ0KEJhY2tFbmQpXG4gICAgaWQ0KEJhY2tFbmQpIC0tPiBpZDMoTWVzc2FnaW5nKVxuICAgIGlkMyhNZXNzYWdpbmcpIC0tPiBpZDIoRnJvbnRFbmQpXG4gICAgICAgICAgICAiLCJtZXJtYWlkIjp7InRoZW1lIjoiZGVmYXVsdCJ9LCJ1cGRhdGVFZGl0b3IiOmZhbHNlfQ)
+
+---
+
 ## Run this application on Docker
 1. **MUST** have [Docker](https://docs.docker.com/get-docker/) installed on your local machine to run this successfully.
 2. **MUST** have [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) installed before advancing to **next step**
@@ -38,7 +44,8 @@ git clone https://github.com/akashpatel2699/IT490-Project.git
 ```bash
 docker-compose -d up
 ```
-8. To stop the serivces or containers, type `docker-compose stop` and this will stop services started by the *docker-compose* command
+8. To check the running application, enter `http://localhost:3000` in your web browser
+9. To stop the serivces or containers, type `docker-compose stop` and this will stop services started by the *docker-compose* command
 
 ---
 
@@ -51,10 +58,8 @@ docker-compose -d up
 ---
 
 ## Q&A
-Q. How to install **Docker** on the machine?
-
+Q. How to install **Docker** on the machine?  
 A. You can install docker based on your Operating System by visiting and following the instruction found on the [Docker site](https://docs.docker.com/get-docker/)
 
-Q. How to check if the **docker-compose** is installed on the machine?
-
+Q. How to check if the **docker-compose** is installed on the machine?  
 A. Type the command `docker-compose` in the terminal and if the output is *command not found* or something similar then you need to install by visiting [docker compose site](https://docs.docker.com/compose/install/)
