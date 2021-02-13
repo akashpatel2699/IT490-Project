@@ -51,6 +51,7 @@ export default function SignIn() {
             label="Email Address"
             name="email"
             autoComplete="email"
+            color="secondary"
             autoFocus
           />
           <TextField
