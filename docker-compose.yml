@@ -9,10 +9,18 @@ services:
     volumes:
       - "./front_end:/app"
   back-end:
-    build: .
+    build: ./back_end
     environment:
       - NODE_ENV=development
-      - MSG_USER=guest
-      - MSG_PASS=guest
+      - MSG_USER=${MSG_USER}
+      - MSG_PASS=${MSG_PASS}
       - MESSAGING_HOST=messaging  
       - PYTHONUNBUFFERED=1
+  messaging:
+    image: rabbitmq:3.8.11-management
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
