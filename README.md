@@ -13,7 +13,7 @@ Our team of four students have decided to create a math placement site that will
 ---
 
 ## Versions
-* Python 3.9.1
+* Python 3.7
 * RabbitMQ 3.8.11
 * Node 15.7.0
 
@@ -45,7 +45,13 @@ git clone https://github.com/akashpatel2699/IT490-Project.git
 docker-compose -d up
 ```
 8. To check the running application, enter `http://localhost:3000` in your web browser
-9. To stop the serivces or containers, type `docker-compose stop` and this will stop services started by the *docker-compose* command
+9. To make sure that messaging service is up and running as expected check following steps to do that:
+    * Open up browser and type http://localhost:15672 to open RabbitMQ management console
+    * Enter your username and password as defined in step 5
+    * Now click on Queues tab
+    * If your service is working as expected then you should be able to see your queue being created there on that page.
+    * If created then click on that queue to enter for information such as how many messages, metrics, get and publish message and so on.
+10. To stop the serivces or containers, type `docker-compose stop` and this will stop services started by the *docker-compose* command
 
 ---
 
@@ -53,7 +59,8 @@ docker-compose -d up
 * Noura Hedhli
 * Noor Baryah
 * Rut Patel
-* Akash Patel
+* Akash Patel   
+<a href="https://github.com/akashpatel2699"><img alt="Github" src="https://img.shields.io/badge/GitHub-%2312100E.svg?&style=for-the-badge&logo=Github&logoColor=white" /></a>
 
 ---
 
