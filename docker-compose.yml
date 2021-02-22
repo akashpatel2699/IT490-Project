@@ -7,4 +7,5 @@ services:
       - "3000:3000"
     #uncomment for development
     volumes:
-      - "./front_end:/app"
+      - "./front_end:/usr/src/app"
+    command: ["npm","run","dev"]

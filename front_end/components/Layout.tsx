@@ -3,12 +3,9 @@ import { FC, ReactChild, ReactFragment } from "react";
 import styles from "../styles/Layout.module.css";
 import Nav from "./Nav";
 import Meta from "./Meta";
+ 
 
-type ChildProp = {
-  children: React.FC;
-};
-
-const Layout = ({ children }: ChildProp) => {
+const Layout = ({ children }) => {
   return (
     <>
       <Meta />

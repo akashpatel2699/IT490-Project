@@ -2,14 +2,17 @@ FROM node:15.7.0-alpine3.10
 
 MAINTAINER AKASH PATEL
 
-WORKDIR /app
+# Create app directory
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
 
-COPY ./package.json /app
+# Copy source files to app directory on docker
+COPY . /usr/src/app
 
+# Install dependencies
 RUN npm install 
 
-COPY . /app
-
+# Building app
+RUN npm run build
 EXPOSE 3000
-
-CMD ["npm", "run","dev"]
+ 
