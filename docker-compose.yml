@@ -8,7 +8,6 @@ services:
     #uncomment for development
     volumes:
       - "./front_end:/usr/src/app"
-    command: ["npm","run","dev"]
   back-end:
     build: ./back_end
     environment:
