@@ -9,7 +9,6 @@ services:
     volumes:
       - "./front_end:/usr/src/app"
     command: ["npm","run","dev"]
-      - "./front_end:/app"
   back-end:
     build: ./back_end
     environment:

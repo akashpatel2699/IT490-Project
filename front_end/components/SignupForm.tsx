@@ -1,20 +1,20 @@
+import React from "react";
+import Avatar from "@material-ui/core/Avatar";
+import Link from "next/link";
+import Head from "next/head";
+import Grid from "@material-ui/core/Grid";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+import { object, string, ref, mixed, addMethod } from "yup";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import {
-  Box,
   Button,
   FormGroup,
   TextField,
   Typography,
-  Grid,
-  Container,
-  Avatar,
+  Box,
 } from "@material-ui/core";
-import { ErrorMessage, Field, Form, Formik, useField } from "formik";
-import React from "react";
-import LockOpenOutlinedIcon from "@material-ui/icons/LockOpenOutlined";
-import { makeStyles } from "@material-ui/core/styles";
-import Link from "next/link";
-import Head from "next/head";
-import { object, string } from "yup";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -47,34 +47,40 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const initialValues = {
-  password: "",
+  fullName: "",
   email: "",
+  password: "",
+  passwordConfirm: "",
 };
 
-const LoginForm = () => {
+const SignupForm = () => {
   const classes = useStyles();
 
   return (
     <>
       <Head>
-        <title>Login</title>
+        <title>Signup</title>
       </Head>
       <Container component="main" maxWidth="xs">
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
-            <LockOpenOutlinedIcon />
+            <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Log in
+            Sign up
           </Typography>
 
           <Formik
             validationSchema={object({
+              fullName: string().required("Enter full name"),
               email: string().email("Invalid email").required("required"),
               password: string()
                 .required("Please Enter password")
                 .min(8)
                 .max(50),
+              passwordConfirm: string()
+                .oneOf([ref("password")], "Password do not match")
+                .required("Password confirm is required"),
             })}
             initialValues={initialValues}
             onSubmit={(values, formikHelpers) => {
@@ -90,13 +96,19 @@ const LoginForm = () => {
           >
             {({ values, errors, isSubmitting, isValidating }) => (
               <Form className={classes.form} noValidate>
-                <Box marginBottom={2}>
+                <Box>
                   <FormGroup>
-                    <Field name="email" as={TextField} label="Email" />
+                    <Field name="fullName" as={TextField} label="Full Name" />
+                    <ErrorMessage name="fullName" />
+                  </FormGroup>
+                </Box>
+                <Box>
+                  <FormGroup>
+                    <Field name="email" as={TextField} label="Email Address" />
                     <ErrorMessage name="email" />
                   </FormGroup>
                 </Box>
-                <Box marginBottom={2}>
+                <Box>
                   <FormGroup>
                     <Field
                       name="password"
@@ -108,21 +120,35 @@ const LoginForm = () => {
                     <ErrorMessage name="password" />
                   </FormGroup>
                 </Box>
-
-                <FormGroup>
-                  <Button
-                    type="submit"
-                    disabled={isSubmitting || isValidating}
-                    className={classes.submit}
-                  >
-                    Submit
-                  </Button>
-                  <Grid container justify="flex-end">
-                    <Grid item>
-                      <Link href="/signup">Don't have an account? Sign up</Link>
+                <Box>
+                  <FormGroup>
+                    <Field
+                      name="passwordConfirm"
+                      as={TextField}
+                      label="Confirm Password"
+                      type="password"
+                    />
+                    <ErrorMessage name="passwordConfirm" />
+                  </FormGroup>
+                </Box>
+                <Box>
+                  <FormGroup>
+                    <Button
+                      type="submit"
+                      disabled={isSubmitting || isValidating}
+                      className={classes.submit}
+                    >
+                      Submit
+                    </Button>
+                    <Grid container justify="flex-end">
+                      <Grid item>
+                        <Link href="/login">
+                          <a>Already have an account? Sign in</a>
+                        </Link>
+                      </Grid>
                     </Grid>
-                  </Grid>
-                </FormGroup>
+                  </FormGroup>
+                </Box>
               </Form>
             )}
           </Formik>
@@ -132,4 +158,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default SignupForm;
