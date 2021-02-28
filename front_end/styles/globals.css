@@ -22,7 +22,7 @@ a {
 @media (prefers-color-scheme: light) {
   :root {
     --text-primary: #24292e;
-    --background: white;
+    --background: #e9e9ed;
     --shadow: rgba(0, 0, 0, 0.15) 0px 2px 5px 0px;
   }
 }
@@ -30,12 +30,13 @@ a {
 @media (prefers-color-scheme: dark) {
   :root {
     --text-primary: white;
-    --background: #24292e;
+    --background: #182a41;
     --shadow: rgba(0, 0, 0, 0.35) 0px 2px 5px 0px;
   }
 }
 
-body {
+body,
+form {
   color: var(--text-primary);
   background-color: var(--background);
 }
