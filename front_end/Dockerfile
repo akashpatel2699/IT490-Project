@@ -1,25 +1,9 @@
-FROM node:15.7.0-alpine3.10
+FROM python:3.7
 
-MAINTAINER AKASH PATEL
+WORKDIR /app
 
-# Create app directory
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+COPY . . 
 
-# Copy source files to app directory on docker
-COPY package*.json  /usr/src/app/
+RUN pip install -r requirements.txt
 
-# Install dependencies
-RUN npm install 
-
-# Copying source files
-COPY . /usr/src/app
-
-# Building app
-RUN npm run build
-
-EXPOSE 3000
-
-# Running the app
-CMD "npm" "run" "start"
- 
+CMD ["python","app.py"]
