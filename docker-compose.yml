@@ -4,7 +4,7 @@ services:
   front-end:
     build: ./front_end
     ports:
-      - "3000:3000"
+      - "3000:8080"
     #uncomment for development
     #volumes:
     # - "./front_end:/usr/src/app"
