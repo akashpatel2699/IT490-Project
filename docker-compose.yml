@@ -4,10 +4,14 @@ services:
   front-end:
     build: ./front_end
     ports:
-      - "3000:8080"
+      - "3000:5000"
+    environment:
+      - MSG_USER=${MSG_USER}
+      - MSG_PASS=${MSG_PASS}
+      - FLASK_SECRET_KEY=${FLASK_SECRET_KEY}
     #uncomment for development
-    #volumes:
-    # - "./front_end:/usr/src/app"
+    volumes:
+     - "./front_end:/app"
   back-end:
     build: ./back_end
     environment:

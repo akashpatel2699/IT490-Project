@@ -17,12 +17,15 @@ a {
 
 :root {
   color-scheme: light dark;
+  --input-padding-x: 1.5rem;
+  --input-padding-y: 0.75rem;
 }
 
 @media (prefers-color-scheme: light) {
   :root {
     --text-primary: #24292e;
     --background: #e9e9ed;
+    /* --background: white; */
     --shadow: rgba(0, 0, 0, 0.15) 0px 2px 5px 0px;
   }
 }
@@ -34,13 +37,11 @@ a {
     --shadow: rgba(0, 0, 0, 0.35) 0px 2px 5px 0px;
   }
 }
-
-body,
-form {
+body{
   color: var(--text-primary);
   background-color: var(--background);
 }
-.container {
+/* .container {
   min-height: 100vh;
   padding: 0 0.5rem;
   display: flex;
@@ -57,7 +58,7 @@ form {
   justify-content: center;
   align-items: center;
   font-size: 1.25rem;
-}
+} 
 
 .footer {
   width: 100%;
@@ -105,3 +106,5 @@ form {
     width: 100%;
     flex-direction: column;
   }
+ }
+
