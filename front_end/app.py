@@ -52,7 +52,7 @@ def login():
                 return "Login failed."
         except:
             pass
-    return render_template("index.html")
+    return render_template("login.html")
 
 
 @app.route("/signup", methods=["GET", "POST"])
@@ -64,7 +64,15 @@ def signup():
         password = request.form["password"]
         print(first_name, last_name, email, password)
         msg = messaging.Messaging()
-        msg.send("REGISTER", {"email": email, "hash": generate_password_hash(password)})
+        msg.send(
+            "REGISTER",
+            {
+                "email": email,
+                "hash": generate_password_hash(password),
+                "first_name": first_name,
+                "last_name": last_name,
+            },
+        )
         response = msg.receive()
         try:
             if response["success"]:
