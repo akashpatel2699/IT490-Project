@@ -42,14 +42,17 @@ def login():
         msg = messaging.Messaging()
         msg.send("GETHASH", {"email": email})
         response = msg.receive()
-        if response["success"] != True:
-            return "Login failed."
-        if check_password_hash(response["hash"], password):
-            session["email"] = email
-            return redirect("/")
-        else:
-            return "Login failed."
-    return render_template("login.html")
+        try:
+            if response["success"] != True:
+                return "Login failed."
+            if check_password_hash(response["hash"], password):
+                session["email"] = email
+                return redirect("/")
+            else:
+                return "Login failed."
+        except:
+            pass
+    return render_template("index.html")
 
 
 @app.route("/signup", methods=["GET", "POST"])
@@ -60,14 +63,17 @@ def signup():
         email = request.form["email"]
         password = request.form["password"]
         print(first_name, last_name, email, password)
-        # msg = messaging.Messaging()
-        # msg.send("REGISTER", {"email": email, "hash": generate_password_hash(password)})
-        # response = msg.receive()
-        # if response["success"]:
-        #     session["email"] = email
-        #     return redirect("/")
-        # else:
-        #     return f"{response['message']}"
+        msg = messaging.Messaging()
+        msg.send("REGISTER", {"email": email, "hash": generate_password_hash(password)})
+        response = msg.receive()
+        try:
+            if response["success"]:
+                session["email"] = email
+                return redirect("/")
+            else:
+                return f"{response['message']}"
+        except:
+            pass
     return render_template("signup.html")
 
 
