@@ -1,0 +1,90 @@
+{% extends "layout.html" %} {% block head %} <title>Sign Up</title>{% endblock
+%} {% block body %}
+<div>
+  <div class="container-fluid d-flex align-items-center justify-content-center">
+    <div class="signup-form text-center">
+      <form action="/signup" method="post">
+        <h2>Register</h2>
+        <p class="hint-text">Create your account to take the test.</p>
+        <div class="form-group">
+          <div class="row">
+            <div class="col">
+              <input
+                type="text"
+                class="form-control"
+                name="first_name"
+                placeholder="First Name"
+                required="required"
+              />
+            </div>
+            <div class="col">
+              <input
+                type="text"
+                class="form-control"
+                name="last_name"
+                placeholder="Last Name"
+                required="required"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <input
+            type="email"
+            pattern=".+@.+\..+"
+            title="Please provide valid email format such as example@something.com"
+            class="form-control"
+            name="email"
+            placeholder="Email"
+            required="required"
+          />
+        </div>
+        <div class="form-group">
+          <input
+            id="Password"
+            type="password"
+            minlength="8"
+            class="form-control"
+            name="password"
+            placeholder="Password"
+            required="required"
+          />
+        </div>
+        <div class="form-group">
+          <input
+            id="ConfirmPassword"
+            type="password"
+            class="form-control"
+            name="confirm_password"
+            placeholder="Confirm Password"
+            required="required"
+          />
+        </div>
+        <div class="form-group">
+          <button
+            type="submit"
+            onClick="return Validate()"
+            class="btn btn-success btn-lg btn-block"
+          >
+            Register Now
+          </button>
+        </div>
+      </form>
+      <div class="text-center">
+        Already have an account? <a href="/login">Sign in</a>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+    function Validate() {
+      var password = document.getElementById("Password").value;
+      var confirmPassword = document.getElementById("ConfirmPassword").value;
+      if (password != confirmPassword) {
+        alert("Passwords do not match.");
+        return false;
+      }
+      return true;
+    }
+  </script>
+  {% endblock %}
+</div>

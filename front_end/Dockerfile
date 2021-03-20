@@ -1,9 +1,12 @@
 FROM python:3.7
 
-WORKDIR /app
+COPY . /app
 
-COPY . . 
+WORKDIR /app
 
 RUN pip install -r requirements.txt
 
-CMD ["python","app.py"]
+ENV FLASK_APP=app.py
+
+CMD ["./wait-for-it.sh", "messaging:5672", "--", \
+     "flask", "run", "--host=0.0.0.0"]

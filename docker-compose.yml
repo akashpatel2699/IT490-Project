@@ -4,18 +4,22 @@ services:
   front-end:
     build: ./front_end
     ports:
-      - "3000:8080"
-    #uncomment for development
-    #volumes:
-    # - "./front_end:/usr/src/app"
+      - "3000:5000"
+    environment:
+      - MSG_USER=${MSG_USER}
+      - MSG_PASS=${MSG_PASS}
+      - FLASK_SECRET_KEY=${FLASK_SECRET_KEY}
   back-end:
     build: ./back_end
     environment:
       - NODE_ENV=development
       - RABBITMQ_DEFAULT_USER=${MSG_USER}
       - RABBITMQ_DEFAULT_PASS=${MSG_PASS}
-      - MESSAGING_HOST=messaging  
+      - MESSAGING_HOST=messaging
       - PYTHONUNBUFFERED=1
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
   messaging:
     image: rabbitmq:3.8.11-management
     ports:
@@ -33,9 +37,9 @@ services:
       - db-data:/var/lib/postgres
       - ./db:/docker-entrypoint-initdb.d
     environment:
-      POSTGRES_DB: placement_test_db
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: it490PasswordG4
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 
 volumes:
   db-data:
