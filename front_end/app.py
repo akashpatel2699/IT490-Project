@@ -44,12 +44,20 @@ def login():
         response = msg.receive()
         try:
             if response["success"] != True:
-                return "Login failed."
+                return render_template(
+                    "login.html",
+                    error_title="Login Failed",
+                    error_message="Login Failed for some reason. Please try back again with  correct credentials",
+                )
             if check_password_hash(response["hash"], password):
                 session["email"] = email
                 return redirect("/")
             else:
-                return "Login failed."
+                return render_template(
+                    "login.html",
+                    error_title="Login Failed",
+                    error_message="Login Failed for some reason. Please try back again with  correct credentials",
+                )
         except:
             pass
     return render_template("login.html")
@@ -79,7 +87,11 @@ def signup():
                 session["email"] = email
                 return redirect("/")
             else:
-                return f"{response['message']}"
+                return render_template(
+                    "signup.html",
+                    error_title=response["message"],
+                    error_message=response["message"],
+                )
         except:
             pass
     return render_template("signup.html")
