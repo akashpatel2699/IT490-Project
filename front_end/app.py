@@ -25,9 +25,6 @@ def login_required(f):
     return decorated_function
 
 
-# end::login_required[]
-
-
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -100,6 +97,12 @@ def signup():
 @app.route("/about")
 def about():
     return render_template("about.html")
+
+
+@app.route("/gettest")
+@login_required
+def get_test():
+    return render_template("test.html")
 
 
 """
