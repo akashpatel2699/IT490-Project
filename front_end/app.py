@@ -2,13 +2,46 @@ from flask import Flask, render_template, request, session, redirect
 from functools import wraps
 from werkzeug.security import check_password_hash, generate_password_hash
 import logging
-import messaging
+import random
+import copy
+
+# import messaging
 import os
 
 app = Flask(__name__)
-app.secret_key = os.environ["FLASK_SECRET_KEY"]
+# app.secret_key = os.environ["FLASK_SECRET_KEY"]
+"""
+Following line must be deleted before production
+"""
+app.secret_key = "\xd4\xe0\x8e\xceg1g0\xcd\xd7\x14J\xed\x87M\xdc\xb7p\xf3;\tBw\x9e"
 
 logging.basicConfig(level=logging.INFO)
+
+# index 0 is the correct answer from answers
+
+test_questions = [
+    {
+        "id": "1",
+        "question": "This is a test question 1. Please try your best to answer them.",
+        "keys": ["answer1", "answer2", "answer3", "answer4"],
+    },
+    {
+        "id": "2",
+        "question": "This is a test  question 2. Please try your best to answer them.",
+        "keys": ["answer2", "answer1", "answer3", "answer4"],
+    },
+]
+
+
+def shuffle_questions_keys(questions):
+    """
+    Shuffle questions and the keys
+    """
+    random.shuffle(questions)
+    for each_question in questions:
+        random.shuffle(each_question["keys"])
+    return questions
+
 
 # tag::login_required[]
 def login_required(f):
@@ -36,27 +69,27 @@ def login():
         email = request.form["email"]
         password = request.form["password"]
         print(email, password)
-        msg = messaging.Messaging()
-        msg.send("GETHASH", {"email": email})
-        response = msg.receive()
-        try:
-            if response["success"] != True:
-                return render_template(
-                    "login.html",
-                    error_title="Login Failed",
-                    error_message="Login Failed for some reason. Please try back again with  correct credentials",
-                )
-            if check_password_hash(response["hash"], password):
-                session["email"] = email
-                return redirect("/")
-            else:
-                return render_template(
-                    "login.html",
-                    error_title="Login Failed",
-                    error_message="Login Failed for some reason. Please try back again with  correct credentials",
-                )
-        except:
-            pass
+        # msg = messaging.Messaging()
+        # msg.send("GETHASH", {"email": email})
+        # response = msg.receive()
+        # try:
+        #     if response["success"] != True:
+        #         return render_template(
+        #             "login.html",
+        #             error_title="Login Failed",
+        #             error_message="Login Failed for some reason. Please try back again with  correct credentials",
+        #         )
+        #     if check_password_hash(response["hash"], password):
+        #         session["email"] = email
+        #         return redirect("/")
+        #     else:
+        #         return render_template(
+        #             "login.html",
+        #             error_title="Login Failed",
+        #             error_message="Login Failed for some reason. Please try back again with  correct credentials",
+        #         )
+        # except:
+        #     pass
     return render_template("login.html")
 
 
@@ -68,41 +101,59 @@ def signup():
         email = request.form["email"]
         password = request.form["password"]
         print(first_name, last_name, email, password)
-        msg = messaging.Messaging()
-        msg.send(
-            "REGISTER",
-            {
-                "email": email,
-                "hash": generate_password_hash(password),
-                "first_name": first_name,
-                "last_name": last_name,
-            },
-        )
-        response = msg.receive()
-        try:
-            if response["success"]:
-                session["email"] = email
-                return redirect("/")
-            else:
-                return render_template(
-                    "signup.html",
-                    error_title=response["message"],
-                    error_message=response["message"],
-                )
-        except:
-            pass
+        # msg = messaging.Messaging()
+        # msg.send(
+        #     "REGISTER",
+        #     {
+        #         "email": email,
+        #         "hash": generate_password_hash(password),
+        #         "first_name": first_name,
+        #         "last_name": last_name,
+        #     },
+        # )
+        # response = msg.receive()
+        # try:
+        #     if response["success"]:
+        #         session["email"] = email
+        #         return redirect("/")
+        #     else:
+        #         return render_template(
+        #             "signup.html",
+        #             error_title=response["message"],
+        #             error_message=response["message"],
+        #         )
+        # except:
+        #     pass
+        session["email"] = email
     return render_template("signup.html")
 
 
-@app.route("/about")
+@app.route("/team")
 def about():
-    return render_template("about.html")
+    return render_template("team.html")
 
 
-@app.route("/gettest")
+@app.route("/gettest", methods=["GET", "POST"])
 @login_required
 def get_test():
-    return render_template("test.html")
+    """
+    Create deepcopy of questions before shuffling
+    questions and keys
+    """
+    if request.method == "POST":
+        correct = 0
+        for each_question in test_questions:
+            try:
+                user_answer = request.form[each_question["id"]]
+                if user_answer == each_question["keys"][0]:
+                    correct += 1
+            except Exception:
+                continue
+        status = "passed" if (correct / len(test_questions)) * 100 > 70 else "failed"
+        return render_template("scorecard.html", score=correct, status=status)
+    questions_copy = copy.deepcopy(test_questions)
+    shuffle_questions = shuffle_questions_keys(questions_copy)
+    return render_template("test.html", questions=shuffle_questions)
 
 
 """

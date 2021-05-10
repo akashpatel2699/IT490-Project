@@ -1,8 +1,27 @@
 {% extends "layout.html" %} {% block head %}
 <title>Test</title>
 {% endblock %} {% block body %}
-<div class="d-flex justify-content-center align-items-center">
-    <h1>Welcome, to test page!</h1>
+<div class="d-flex flex-column justify-content-center align-items-center">
+    <h1>Welcome, to the test</h1>
+    <div>
+        <form action="/gettest" method="post">
+            {% for each in questions %}
+            <div class="question bg-white p-3 border-bottom">
+                <div class="d-flex flex-row align-items-center question-title">
+                    <h3 class="text-danger">Q.</h3>
+                    <h5 class="mt-1 ml-2">{{each.question}}</h5>
+                </div>
+                {% for key in each["keys"] %}
+                <div class="ans ml-2">
+                    <label class="radio"> <input type="radio" name={{each.id}} value={{key}}> <span>{{key}}</span>
+                    </label>
+                </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+            <div class="d-flex flex-row justify-content-between align-items-center p-3 bg-white"><button class="btn btn-primary border-success align-items-center btn-success" type="submit">Submit<i class="fa fa-angle-right ml-2"></i></button></div>
+        </form>
+    </div>
 </div>
 
 {% endblock %}
