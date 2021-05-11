@@ -5,32 +5,18 @@ import logging
 import random
 import copy
 
-# import messaging
+import messaging
 import os
 
 app = Flask(__name__)
-# app.secret_key = os.environ["FLASK_SECRET_KEY"]
+app.secret_key = os.environ["FLASK_SECRET_KEY"]
 """
 Following line must be deleted before production
 """
-app.secret_key = "\xd4\xe0\x8e\xceg1g0\xcd\xd7\x14J\xed\x87M\xdc\xb7p\xf3;\tBw\x9e"
 
 logging.basicConfig(level=logging.INFO)
 
-# index 0 is the correct answer from answers
-
-test_questions = [
-    {
-        "id": "1",
-        "question": "This is a test question 1. Please try your best to answer them.",
-        "keys": ["answer1", "answer2", "answer3", "answer4"],
-    },
-    {
-        "id": "2",
-        "question": "This is a test  question 2. Please try your best to answer them.",
-        "keys": ["answer2", "answer1", "answer3", "answer4"],
-    },
-]
+test_questions = []
 
 
 def shuffle_questions_keys(questions):
@@ -68,28 +54,27 @@ def login():
     if request.method == "POST":
         email = request.form["email"]
         password = request.form["password"]
-        print(email, password)
-        # msg = messaging.Messaging()
-        # msg.send("GETHASH", {"email": email})
-        # response = msg.receive()
-        # try:
-        #     if response["success"] != True:
-        #         return render_template(
-        #             "login.html",
-        #             error_title="Login Failed",
-        #             error_message="Login Failed for some reason. Please try back again with  correct credentials",
-        #         )
-        #     if check_password_hash(response["hash"], password):
-        #         session["email"] = email
-        #         return redirect("/")
-        #     else:
-        #         return render_template(
-        #             "login.html",
-        #             error_title="Login Failed",
-        #             error_message="Login Failed for some reason. Please try back again with  correct credentials",
-        #         )
-        # except:
-        #     pass
+        msg = messaging.Messaging()
+        msg.send("GETHASH", {"email": email})
+        response = msg.receive()
+        try:
+            if response["success"] != True:
+                return render_template(
+                    "login.html",
+                    error_title="Login Failed",
+                    error_message="Login Failed for some reason. Please try back again with  correct credentials",
+                )
+            if check_password_hash(response["hash"], password):
+                session["email"] = email
+                return redirect("/")
+            else:
+                return render_template(
+                    "login.html",
+                    error_title="Login Failed",
+                    error_message="Login Failed for some reason. Please try back again with  correct credentials",
+                )
+        except:
+            pass
     return render_template("login.html")
 
 
@@ -100,30 +85,29 @@ def signup():
         last_name = request.form["last_name"]
         email = request.form["email"]
         password = request.form["password"]
-        print(first_name, last_name, email, password)
-        # msg = messaging.Messaging()
-        # msg.send(
-        #     "REGISTER",
-        #     {
-        #         "email": email,
-        #         "hash": generate_password_hash(password),
-        #         "first_name": first_name,
-        #         "last_name": last_name,
-        #     },
-        # )
-        # response = msg.receive()
-        # try:
-        #     if response["success"]:
-        #         session["email"] = email
-        #         return redirect("/")
-        #     else:
-        #         return render_template(
-        #             "signup.html",
-        #             error_title=response["message"],
-        #             error_message=response["message"],
-        #         )
-        # except:
-        #     pass
+        msg = messaging.Messaging()
+        msg.send(
+            "REGISTER",
+            {
+                "email": email,
+                "hash": generate_password_hash(password),
+                "first_name": first_name,
+                "last_name": last_name,
+            },
+        )
+        response = msg.receive()
+        try:
+            if response["success"]:
+                session["email"] = email
+                return redirect("/")
+            else:
+                return render_template(
+                    "signup.html",
+                    error_title=response["message"],
+                    error_message=response["message"],
+                )
+        except:
+            pass
         session["email"] = email
     return render_template("signup.html")
 
@@ -140,70 +124,44 @@ def get_test():
     Create deepcopy of questions before shuffling
     questions and keys
     """
+    global test_questions
     if request.method == "POST":
         correct = 0
         for each_question in test_questions:
             try:
                 user_answer = request.form[each_question["id"]]
-                if user_answer == each_question["keys"][0]:
+                if user_answer.lower() == each_question["keys"][0]:
                     correct += 1
             except Exception:
                 continue
-        status = "passed" if (correct / len(test_questions)) * 100 > 70 else "failed"
-        return render_template("scorecard.html", score=correct, status=status)
+        percentage_score = (correct / len(test_questions)) * 100
+        status = "passed" if percentage_score >= 70 else "failed"
+        message = ""
+        if percentage_score < 70:
+            message = "Unfortunately, you have scored {}% on the test and missed the passing score of 70% or more.".format(
+                int(percentage_score)
+            )
+        elif percentage_score == 70:
+            message = "Luckily, you passed the test with a scoring percentage of {}% on the test.".format(
+                int(percentage_score)
+            )
+        else:
+            message = "Congrats, you have scored {}% on the test and crossed the passing requirement of 70% or more.".format(
+                int(percentage_score)
+            )
+        return render_template("scorecard.html", message=message, status=status)
+    msg = messaging.Messaging()
+    msg.send("GETTEST", {"email": "garbage"})
+    response = msg.receive()
+    try:
+        if response["success"] != True:
+            return render_template("index.html")
+        test_questions = response["questions"]["questions"]
+    except:
+        pass
     questions_copy = copy.deepcopy(test_questions)
     shuffle_questions = shuffle_questions_keys(questions_copy)
     return render_template("test.html", questions=shuffle_questions)
-
-
-"""
-@app.route("/secret")
-@login_required
-def secret():
-    return render_template("secret.html")
-"""
-
-# tag::register[]
-"""@app.route("/singup", methods=["GET", "POST"])
-def register():
-    if request.method == "POST":
-        email = request.form["email"]
-        password = request.form["password"]
-        msg = messaging.Messaging()
-        msg.send("REGISTER", {"email": email, "hash": generate_password_hash(password)})
-        response = msg.receive()
-        if response["success"]:
-            session["email"] = email
-            return redirect("/")
-        else:
-            return f"{response['message']}"
-    return render_template("register.html")
-"""
-
-# end::register[]
-
-# tag::login[]
-"""@app.route("/login", methods=["GET", "POST"])
-def login():
-    if request.method == "POST":
-        print("POst method got called")
-        email = request.form["email"]
-        password = request.form["password"]
-        msg = messaging.Messaging()
-        msg.send("GETHASH", {"email": email})
-        response = msg.receive()
-        if response["success"] != True:
-            return "Login failed."
-        if check_password_hash(response["hash"], password):
-            session["email"] = email
-            return redirect("/")
-        else:
-            return "Login failed."
-    print("get method called")
-    return redirect("/")
-"""
-
-# end::login[]
 
 
 @app.route("/logout")
