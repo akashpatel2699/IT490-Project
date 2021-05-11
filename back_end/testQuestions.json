@@ -1,0 +1,95 @@
+{
+    "questions": [
+      {
+        "question": "sin^2 + cos^2 = ",
+        "keys": [
+          "1",
+          "tan^2",
+          "-1",
+          "0"
+        ]
+      },
+      {
+        "question": "Find the exact value sin(17pi/12) = ",
+        "keys": [
+          "-0.96",
+          "0.96",
+          "1",
+          "0"
+        ]
+      },
+      {
+        "question": "8(x-2)-5(x+4)=20+x solve for X",
+        "keys": [
+          "x=28",
+          "x=-38",
+          "x=18",
+          "x=42"
+        ]
+      },
+      {
+        "question": "The profit, P, realized by a company varies directly as the number of products s it sells. If a company makes a profit of $7800 on the sale of 325 products, what is the profit when the company sells 5000 products?",
+        "keys": [
+            "120,000",
+            "80,000",
+            "100,000",
+            "60,000"
+        ]
+    },
+    {
+        "question": "A 36 foot long tube is cut into two pieces with ratio 4:5. Find the length of the shorter piece.",
+        "keys": [
+          "16 feet",
+          "16,foot",
+          "32,feet",
+          "32,foot"
+        ]
+    },
+    {
+        "question": "The sum of two numbers is 31. Twice the smaller number is 11 more than the larger number. The positive difference between the numbers is ",
+        "keys": [
+          "3",
+          "-3",
+          "1",
+          "0"
+        ]
+    },
+    {
+        "question": "Evaluate sqrt(25+144)? ",
+        "keys": [
+          "13",
+          "17",
+          "12",
+          "11"
+        ]
+    },
+    {
+        "question": "The length of a certain rectangle is two meters less than four times its width. The perimeter of the rectangle is  56  meters. Find the length of the rectangle. ",
+        "keys": [
+          "22.0",
+          "24.0",
+          "20.0",
+          "18.0"
+        ]
+    },
+    {
+        "question": "Of the following, which best approximates the roots of the equation 2x^2+3x-6=0? ",
+        "keys": [
+          "-2.64,1.14",
+          "-1.14,2.64",
+          "3.21, -1.15",
+          "-1.15, 3.21"
+        ]
+    },
+    {
+        "question": "A 50 foot tower casts an 80 foot shadow. At the same time a telephone pole casts a 56 foot shadow. What is the height of the telephone pole?",
+        "keys": [
+          "35ft",
+          "70ft",
+          "20ft",
+          "10ft"
+        ]
+    }
+
+    ]
+  }
