@@ -5,6 +5,10 @@ import time
 import logging
 import json
 
+with open('testQuestions.json', 'r') as myfile:
+    data=myfile.read()
+questions=json.loads(data)
+
 # tag::process_request[]
 def process_request(ch, method, properties, body):
     """
@@ -43,6 +47,8 @@ def process_request(ch, method, properties, body):
                 )
                 conn.commit()
                 response = {"success": True}
+        elif action == "GETTEST":
+            response = {"success": True, "questions": questions}
         else:
             response = {"success": False, "message": "Unknown action"}
     logging.info(response)
