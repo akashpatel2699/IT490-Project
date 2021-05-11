@@ -33,24 +33,27 @@
             <a class="nav-link" href="/">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/about">About</a>
+            <a class="nav-link" href="/team">Team</a>
           </li>
           {% if session['email'] %}
+          <li class="nav-item">
+            <a class="nav-link" href="/gettest">Test</a>
+          </li>
           <li class="nav-item">
             <span class="navbar-text">{{ session['email'] }}</span>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/logout">Log Out</a>
+            <a class="nav-link" href="/logout">Log out</a>
           </li>
           {% else %}
           <li class="nav-item">
-            <a class="nav-link" href="/login">Sign In</a>
+            <a class="nav-link" href="/login">Sign in</a>
           </li>
           {% endif %}
         </ul>
       </div>
     </nav>
-    <div class="container">{% block body %} {% endblock %}</div>
+    <div class="content">{% block body %} {% endblock %}</div>
     <footer id="footer">
       <p>
         Copyright &copy; 2021-

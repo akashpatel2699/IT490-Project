@@ -1,0 +1,18 @@
+{% extends "layout.html" %} {% block head %}
+<title>Test</title>
+{% endblock %} {% block body %}
+<div class="score-page">
+    {% if status == "passed" %}
+    <div class="pyro">
+        <div class="before"></div>
+        <div class="after"></div>
+        <h3>{{message}}</h3>
+    </div>
+    {% else %}
+    <div>
+        <h3>{{message}}</h3>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

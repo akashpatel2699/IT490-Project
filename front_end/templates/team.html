@@ -1,0 +1,75 @@
+{% extends "layout.html" %} {% block head %}
+<title>Team Page</title>
+{% endblock %} {% block body %}
+<div class="container d-flex align-items-center flex-column mb-2">
+  <h1>Our Team</h1>
+  <div class="row m-1">
+    <!-- Team Member 1-->
+    <div class="col">
+      <div class="card" style="width: 400px">
+        <img
+          class="card-img-top"
+          src="/static/img_avatar1.png"
+          alt="Card image"
+          style="width: 100%"
+        />
+        <div class="card-body">
+          <h4 class="card-title">Akash Patel</h4>
+          <p class="card-text">Front-end Web Developer</p>
+          <!-- <a href="#" class="btn btn-primary stretched-link">See Profile</a> -->
+        </div>
+      </div>
+    </div>
+    <!-- Team Member 2-->
+    <div class="col">
+      <div class="card" style="width: 400px">
+        <img
+          class="card-img-top"
+          src="/static/img_avatar6.png"
+          alt="Card image"
+          style="width: 100%"
+        />
+        <div class="card-body">
+          <h4 class="card-title">Noor Baryah</h4>
+          <p class="card-text">Database Administrator</p>
+          <!-- <a href="#" class="btn btn-primary stretched-link">See Profile</a> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row m-1">
+    <!-- Team Member 3-->
+    <div class="col">
+      <div class="card" style="width: 400px">
+        <img
+          class="card-img-top"
+          src="/static/img_avatar6.png"
+          alt="Card image"
+          style="width: 100%"
+        />
+        <div class="card-body">
+          <h4 class="card-title">Noura Hedhli</h4>
+          <p class="card-text">Messaging Queue</p>
+          <!-- <a href="#" class="btn btn-primary stretched-link">See Profile</a> -->
+        </div>
+      </div>
+    </div>
+    <!-- Team Member 4-->
+    <div class="col">
+      <div class="card" style="width: 400px">
+        <img
+          class="card-img-top"
+          src="/static/img_avatar1.png"
+          alt="Card image"
+          style="width: 100%"
+        />
+        <div class="card-body">
+          <h4 class="card-title">Rut Patel</h4>
+          <p class="card-text">Back-end Developer</p>
+          <!-- <a href="#" class="btn btn-primary stretched-link">See Profile</a> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
